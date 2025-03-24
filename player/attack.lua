@@ -26,13 +26,13 @@ function attack.update(dt)
     attack.lastShot = attack.lastShot + dt
     if attack.lastShot >= attack.fireRate then
         if direction == "up" then
-            attack.shoot(player.x + player.size / 2 - 5, player.y)
+            attack.shoot(player.x + (player.size / 2), player.y)
         elseif direction == "down" then
-            attack.shoot(player.x + player.size / 2 - 5, player.y + player.size)
+            attack.shoot(player.x + (player.size / 2), player.y + player.size)
         elseif direction == "left" then
-            attack.shoot(player.x, player.y + player.size / 2 - 5)
+            attack.shoot(player.x, player.y + (player.size / 2))
         elseif direction == "right" then
-            attack.shoot(player.x + player.size, player.y + player.size / 2 - 5)
+            attack.shoot(player.x + player.size, player.y + (player.size / 2))
         end
         attack.lastShot = 0 -- Reset timer
     end
@@ -61,8 +61,7 @@ function attack.shoot(x, y)
     local bullet = {
         x = x,
         y = y,
-        width = 10,
-        height = 5,
+        size = 10,
         speed = attack.bulletSpeed,
         direction = direction
     }
@@ -71,7 +70,7 @@ end
 
 function attack.draw()
     for _, bullet in ipairs(attack.bullets) do
-        love.graphics.rectangle("fill", bullet.x, bullet.y, bullet.width, bullet.height)
+        love.graphics.circle("fill", bullet.x, bullet.y, bullet.size)
     end
 end
 
