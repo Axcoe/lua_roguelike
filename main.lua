@@ -5,7 +5,9 @@ function love.load()
 end
 
 function love.update(dt)
-    -- Mise à jour de la logique du jeu
+    if love.keyboard.isDown("escape") then
+        love.event.quit()
+    end
 end
 
 function love.draw()
