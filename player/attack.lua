@@ -1,7 +1,7 @@
 local attack = {
     bullets = {},
     bulletSpeed = 400,
-    fireRate = 0.3,
+    fireRate = 0.5,
     lastShot = 0
 }
 
