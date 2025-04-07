@@ -5,41 +5,48 @@ local attack = {
     lastShot = 0
 }
 
-local direction = "right"
-
 function attack.update(dt)
-
-    if love.keyboard.isDown("z") then
-        direction = "up"
-    end
-    if love.keyboard.isDown("s") then
-        direction = "down"
-    end
-    if love.keyboard.isDown("q") then
-        direction = "left"
-    end
-    if love.keyboard.isDown("d") then
-        direction = "right"
-    end
-
-    -- Auto-shoot bullets
     attack.lastShot = attack.lastShot + dt
-    if attack.lastShot >= attack.fireRate then
-        if direction == "up" then
-            attack.shoot(player.x + (player.size / 2), player.y)
-        elseif direction == "down" then
-            attack.shoot(player.x + (player.size / 2), player.y + player.size)
-        elseif direction == "left" then
-            attack.shoot(player.x, player.y + (player.size / 2))
-        elseif direction == "right" then
-            attack.shoot(player.x + player.size, player.y + (player.size / 2))
+
+    if love.mouse.isDown(1) and attack.lastShot >= attack.fireRate then
+        local mouseX, mouseY = love.mouse.getPosition()
+        local px = player.x + player.size / 2
+        local py = player.y + player.size / 2
+
+        -- Calcul du vecteur entre joueur et souris
+        local dx = mouseX - px
+        local dy = mouseY - py
+
+        local direction
+        if math.abs(dx) > math.abs(dy) then
+            if dx > 0 then
+                direction = "right"
+            else
+                direction = "left"
+            end
+        else
+            if dy > 0 then
+                direction = "down"
+            else
+                direction = "up"
+            end
         end
-        attack.lastShot = 0 -- Reset timer
+
+        -- Détermine la position de départ du tir
+        local bx, by = px, py
+        if direction == "up" then by = player.y end
+        if direction == "down" then by = player.y + player.size end
+        if direction == "left" then bx = player.x end
+        if direction == "right" then bx = player.x + player.size end
+
+        attack.shoot(bx, by, direction)
+        attack.lastShot = 0
     end
 
-    -- Update bullets
+    -- Update des balles
     for i = #attack.bullets, 1, -1 do
         local bullet = attack.bullets[i]
+
         if bullet.direction == "up" then
             bullet.y = bullet.y - bullet.speed * dt
         elseif bullet.direction == "down" then
@@ -50,14 +57,15 @@ function attack.update(dt)
             bullet.x = bullet.x + bullet.speed * dt
         end
 
-        -- Remove bullets when off-screen
-        if bullet.x > love.graphics.getWidth() then
+        -- Supprimer hors écran
+        if bullet.x < 0 or bullet.x > love.graphics.getWidth()
+        or bullet.y < 0 or bullet.y > love.graphics.getHeight() then
             table.remove(attack.bullets, i)
         end
     end
 end
 
-function attack.shoot(x, y)
+function attack.shoot(x, y, direction)
     local bullet = {
         x = x,
         y = y,
