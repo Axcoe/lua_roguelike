@@ -1,7 +1,10 @@
-local start_menu = {}
 local buttons = {}
 local font = nil
 BUTTON_HEIGHT = 80
+
+start_menu = {
+    isMenu = true
+}
 
 function newButton(text, fn)
     return {
@@ -13,13 +16,17 @@ function newButton(text, fn)
     }
 end
 
+function start_menu.launch_game()
+    start_menu.isMenu = false
+end
+
 function start_menu.loadStartMenu()
     font = love.graphics.newFont(32)
 
     table.insert(buttons, newButton(
             "Start Game",
             function()
-                print("Starting Game")
+                start_menu.launch_game()
             end
     ))
 

@@ -4,8 +4,7 @@ local target = require("target/target")
 local start_menu = require("menus/start_menu")
 
 function love.load()
-    love.window.setMode
-    (
+    love.window.setMode(
         love.graphics.getWidth(),
         love.graphics.getHeight(),
         {
@@ -47,14 +46,17 @@ function love.draw()
     if player.hp <= 0 then
         player.gameOver()
     else
-        start_menu.drawStartMenu()
-        player.draw()
-        attack.draw()
+        if start_menu.isMenu == true then
+            start_menu.drawStartMenu()
+        else
+            player.draw()
+            attack.draw()
     ----------------------------
 
     ---------- Target ----------
-        target.draw()
+            target.draw()
     ----------------------------
+        end
     end
 
 end
