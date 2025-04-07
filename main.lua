@@ -1,6 +1,7 @@
 local player = require("player/player")
 local attack = require("player/attack")
 local target = require("target/target")
+local start_menu = require("menus/start_menu")
 
 function love.load()
     love.window.setMode
@@ -20,6 +21,7 @@ function love.load()
     -- Player --
     player.load()
     ------------
+    start_menu.loadStartMenu()
 end
 
 function love.keypressed(key)
@@ -45,6 +47,7 @@ function love.draw()
     if player.hp <= 0 then
         player.gameOver()
     else
+        start_menu.drawStartMenu()
         player.draw()
         attack.draw()
     ----------------------------
@@ -53,4 +56,5 @@ function love.draw()
         target.draw()
     ----------------------------
     end
+
 end
