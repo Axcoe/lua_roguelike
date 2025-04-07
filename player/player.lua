@@ -90,20 +90,33 @@ function player.load()
 end
 
 function player.update(dt)
+    local dx, dy = 0, 0
+
     if love.keyboard.isDown("z") then
-        player.y = player.y - player.speed * dt
+        dy = dy - 1
     end
     if love.keyboard.isDown("s") then
-        player.y = player.y + player.speed * dt
+        dy = dy + 1
     end
     if love.keyboard.isDown("q") then
-        player.x = player.x - player.speed * dt
+        dx = dx - 1
     end
     if love.keyboard.isDown("d") then
-        player.x = player.x + player.speed * dt
+        dx = dx + 1
     end
+
+    -- Normalisation si nécessaire
+    if dx ~= 0 or dy ~= 0 then
+        local length = math.sqrt(dx * dx + dy * dy)
+        dx = dx / length
+        dy = dy / length
+
+        player.x = player.x + dx * player.speed * dt
+        player.y = player.y + dy * player.speed * dt
+    end
+
     if love.keyboard.isDown("space") then
-        player.hp = math.max(0, player.hp - 20 * dt) -- Diminue la vie
+        player.hp = math.max(0, player.hp - 20 * dt)
     end
 
     player.xpLogic()
@@ -115,6 +128,7 @@ function player.update(dt)
         end
     end
 end
+
 
 function player.gameOver()
     love.graphics.setColor(1, 0, 0)

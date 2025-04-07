@@ -46,9 +46,9 @@ end
 
 function target.isHit(bullet)
     return bullet.x - bullet.size < target.x + target.width and
-           bullet.x + bullet.size > target.x and
-           bullet.y - bullet.size < target.y + target.height and
-           bullet.y + bullet.size > target.y
+        bullet.x + bullet.size > target.x and
+        bullet.y - bullet.size < target.y + target.height and
+        bullet.y + bullet.size > target.y
 end
 
 function target.isAlive()
