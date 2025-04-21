@@ -38,18 +38,17 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    if pause_menu.isPaused then
-        return
+    if start_menu.isMenu == false then
+        if pause_menu.isPaused then
+            return
+        end
+        -- Player --
+        player.update(dt)
+        attack.update(dt)
+        ------------
+
+        target.update(dt)
     end
-
-    -- Player --
-    player.update(dt)
-    attack.update(dt)
-    ------------
-
-    target.update(dt)
-
-    -- map --
 end
 
 function love.draw()
