@@ -2,6 +2,9 @@ local player = require("player/player")
 local attack = require("player/attack")
 local target = require("target/target")
 local start_menu = require("menus/start_menu")
+local pause_menu = require("menus/pause_menu")
+local sti = require("lib/sti")
+
 
 function love.load()
     love.window.setMode(
@@ -21,22 +24,35 @@ function love.load()
     player.load()
     ------------
     start_menu.loadStartMenu()
+    pause_menu.loadPauseMenu()
+    map = sti("assets/map_roguelike.lua")
 end
 
 function love.keypressed(key)
     if key == "escape" then
-        love.event.quit()
+        pause_menu.toggle()
+        return  -- on sort pour ne pas passer la touche à target
     end
-    target.keypressed(key)
+
+    if not pause_menu.isPaused then
+        target.keypressed(key)
+    end
 end
 
 function love.update(dt)
+    if pause_menu.isPaused then
+        return
+    end
+
     -- Player --
     player.update(dt)
     attack.update(dt)
     ------------
 
     target.update(dt)
+
+    -- map --
+    map:update(dt)
 end
 
 function love.draw()
@@ -56,7 +72,13 @@ function love.draw()
     ---------- Target ----------
             target.draw()
     ----------------------------
+
+    ---------- Map -------------
+            map:draw()
+    ----------------------------
         end
     end
+
+    pause_menu.drawPauseMenu()
 
 end
