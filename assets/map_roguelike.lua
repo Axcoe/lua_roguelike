@@ -13,11 +13,7 @@ return {
       tileheight = 0,
       spacing = 0,
       margin = 0,
-      image = {
-        source = "",
-        width = "0",
-        height = "0",
-      },
+      image = "",
       properties = { 
       },
     },
@@ -27,11 +23,7 @@ return {
       tileheight = 0,
       spacing = 0,
       margin = 0,
-      image = {
-        source = "",
-        width = "0",
-        height = "0",
-      },
+      image = "",
       properties = { 
       },
     },
@@ -41,11 +33,7 @@ return {
       tileheight = 0,
       spacing = 0,
       margin = 0,
-      image = {
-        source = "",
-        width = "0",
-        height = "0",
-      },
+      image = "",
       properties = { 
       },
     },

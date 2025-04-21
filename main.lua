@@ -3,7 +3,6 @@ local attack = require("player/attack")
 local target = require("target/target")
 local start_menu = require("menus/start_menu")
 local pause_menu = require("menus/pause_menu")
-local sti = require("lib/sti")
 
 
 function love.load()
@@ -25,7 +24,6 @@ function love.load()
     ------------
     start_menu.loadStartMenu()
     pause_menu.loadPauseMenu()
-    map = sti("assets/map_roguelike.lua")
 end
 
 function love.keypressed(key)
@@ -52,7 +50,6 @@ function love.update(dt)
     target.update(dt)
 
     -- map --
-    map:update(dt)
 end
 
 function love.draw()
@@ -74,7 +71,6 @@ function love.draw()
     ----------------------------
 
     ---------- Map -------------
-            map:draw()
     ----------------------------
         end
     end
