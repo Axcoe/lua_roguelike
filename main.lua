@@ -31,12 +31,14 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    -- Player --
-    player.update(dt)
-    attack.update(dt)
-    ------------
+    if start_menu.isMenu == false then
+        -- Player --
+        player.update(dt)
+        attack.update(dt)
+        ------------
 
-    target.update(dt)
+        target.update(dt)
+    end
 end
 
 function love.draw()
