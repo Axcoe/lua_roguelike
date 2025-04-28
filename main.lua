@@ -22,6 +22,10 @@ function love.load()
     -- Player --
     player.load()
     ------------
+
+    -- Target --
+    target.load()
+    ------------
     start_menu.loadStartMenu()
     pause_menu.loadPauseMenu()
 end
